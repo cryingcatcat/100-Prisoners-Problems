@@ -5,11 +5,10 @@ class Simulation:
         temp = []
         initial_index = i
         while True:
+            temp.append(box[i])
             if box[i] == initial_index: #if current element is the same as the initial index, it means we formed a loop.
-                temp.append(box[i])
                 break
             else:                       #restore the current element & allocate new index.
-                temp.append(box[i])
                 i = box[i]
         return temp
 
@@ -17,8 +16,8 @@ class Simulation:
         box = random.sample(range(100), 100)
         all_loops = []
         used = {}
-        for i in range(len(box)):
-            if box[i] not in used:      #check if current element has appeared in existed loops.
+        for i in range(len(box)):  #check if the current element is already in a loop
+            if not used.get(box[i]):
                 all_loops.append(self.loop_constraint(box, i))
                 for j in all_loops[-1]:
                     used[j] = 1
@@ -37,3 +36,9 @@ class Simulation:
             else:
                 fail += 1
         return success/(1000)
+
+'''
+if __name__ == "__main__":
+    r = Simulation()
+    print(r.get_rate())
+'''
